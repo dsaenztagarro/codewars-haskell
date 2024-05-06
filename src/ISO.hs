@@ -1,5 +1,6 @@
 module ISO where
 
+import Data.Maybe (fromJust)
 import Data.Void
 
 -- A type of `Void` have no value.
@@ -78,30 +79,29 @@ isoFunc (ab, ba) (cd, dc) = (acbd, bdac)
 -- Is the same as the original value.
 -- You need this to prove some case are impossible.
 isoUnMaybe :: ISO (Maybe a) (Maybe b) -> ISO a b
-isoUnMaybe (mab, mba) = (ab, ba)
-  where ab a = case mab (Just a) of
-                 Just b -> b
-                 Nothing -> case mab Nothing of
-                              Just b' -> b'
-                              Nothing -> error "impossible case"
-
-        ba b = case mba (Just b) of
-                  Just a -> a
-                  Nothing -> case mba Nothing of
-                               Just a' -> a'
-                               Nothing -> error "impossible case"
+isoUnMaybe m@(mamb, mbma) =
+  (\a -> get $ mamb $ Just a, substL $ isoUnMaybe $ symm m)
+  where
+    get (Just b) = b
+    get Nothing = fromJust (mamb Nothing)
+    -- Suppose mamb return Nothing
+    -- Since mamb (Just a) is Nothing, mbma Nothing is Just a.
+    -- Since mamb Nothing, mbma Nothing is Nothing
+    -- mbma Nothing can only be Just a, or Nothing, but cannot be both!
+    -- So there is a contraidction, this case is impossible.
 
 -- We cannot have
 -- isoUnEither :: ISO (Either a b) (Either c d) -> ISO a c -> ISO b d.
 
 -- Note that we have
 isoEU :: ISO (Either [()] ()) (Either [()] Void)
-isoEU = (ab, ba)
-  where ab (Left a) = Left (a <> [()])
-        ab (Right ()) = Left []
-        ba (Left []) = Right ()
-        ba (Left a) = Left (drop 1 a)
-        ba _ = error "impossible case"
+isoEU = (left, right)
+  where
+    left  (Left     l)  = Left  (():l)
+    left  (Right    _)  = Left  []
+    right (Left    [])  = Right ()
+    right (Left (_:l))  = Left  l
+    right (Right    v)  = absurd v -- absurd :: Void -> a
 -- where (), the empty tuple, has 1 value, and Void has 0 value
 -- If we have isoUnEither,
 -- We have ISO () Void by calling isoUnEither isoEU
@@ -111,4 +111,3 @@ isoEU = (ab, ba)
 -- And we have isomorphism on isomorphism!
 isoSymm :: ISO (ISO a b) (ISO b a)
 isoSymm = (\(ab, ba) -> (ba, ab), \(ba, ab) -> (ab, ba))
-
