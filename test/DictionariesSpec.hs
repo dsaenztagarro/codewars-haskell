@@ -1,8 +1,10 @@
-module Dictionaries.Test where
+module DictionariesSpec (specs) where
+
 import Dictionaries (sortDict)
+
 import Test.Hspec
 
-main = hspec $ do
+specs = do
   describe "sortDict" $ do
     it "should handle dictionaries with numbers as keys" $ do
       sortDict [(1,3),(2,2),(3,1)] `shouldBe` [(1,3),(2,2),(3,1)]

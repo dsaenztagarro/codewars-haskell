@@ -1,4 +1,5 @@
-module Codewars.Kata.SumString where
+module SumString where
+
 import Data.List.Split
 import Data.Char
 

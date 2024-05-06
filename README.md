@@ -29,3 +29,12 @@ Sum is 2021.
 **NOTE**
 
 `ghci`: `:set -XFlexibleContexts (ghci)`
+
+
+#### Tests
+
+Run specs with:
+
+```bash
+cabal test --test-show-details=direct
+```
