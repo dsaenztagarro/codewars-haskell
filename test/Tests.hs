@@ -1,6 +1,6 @@
 import qualified ISOSpec
-import qualified DictionariesSpec
-import qualified SumStringSpec
+import qualified KatasSpec.DictionariesSpec
+import qualified KatasSpec.SumStringSpec
 
 import Test.Hspec.Runner (configFailFast, defaultConfig, hspecWith)
 
@@ -9,5 +9,5 @@ main = hspecWith defaultConfig {configFailFast = True} specs
 
 specs = do
   ISOSpec.specs
-  DictionariesSpec.specs
-  SumStringSpec.specs
+  KatasSpec.DictionariesSpec.specs
+  KatasSpec.SumStringSpec.specs

@@ -1,6 +1,6 @@
-module DictionariesSpec (specs) where
+module KatasSpec.DictionariesSpec (specs) where
 
-import Dictionaries (sortDict)
+import Katas.Dictionaries (sortDict)
 
 import Test.Hspec
 

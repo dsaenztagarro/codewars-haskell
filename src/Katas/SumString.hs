@@ -1,4 +1,4 @@
-module SumString where
+module Katas.SumString where
 
 import Data.List.Split
 import Data.Char

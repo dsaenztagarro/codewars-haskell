@@ -1,6 +1,6 @@
-module SumStringSpec (specs) where
+module KatasSpec.SumStringSpec (specs) where
 
-import SumString (sumFromString)
+import Katas.SumString (sumFromString)
 
 import Test.Hspec
 import Test.QuickCheck

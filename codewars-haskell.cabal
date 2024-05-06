@@ -60,8 +60,8 @@ library
 
     -- Modules exported by the library.
     exposed-modules:  ISO
-                    , Dictionaries
-                    , SumString
+                    , Katas.Dictionaries
+                    , Katas.SumString
 
     -- Modules included in this library but not exported.
     -- other-modules:

@@ -1,4 +1,5 @@
-module Dictionaries where
+module Katas.Dictionaries where
+
 import Data.List (sortBy)
 import Data.Ord  (comparing)
 
